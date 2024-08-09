@@ -16,7 +16,7 @@ const CategoryPage = async ({ params }: { params: { category: string } }) => {
         {
             filteredProducts.length > 0 && (
                 filteredProducts.map((product: any) => (
-                    <ProductCard id={product.id} image={product.image} name={product.name} price={product.price} />
+                    <ProductCard key={product.id} id={product.id} image={product.image} name={product.name} price={product.price} />
                 ))
             )
         }
