@@ -1,26 +1,25 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
-const useWindowResize = () => {
+const useResizeWindow = () => {
   const [isDesktopView, setIsDesktopView] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
-    // Inicializar el estado con el valor de isDesktop desde el servidor
-    setIsDesktopView(router.isDesktop ?? false);
-
     // Verificar si window está disponible (en el cliente)
     if (typeof window !== 'undefined') {
+      // Inicializar el estado con el tamaño actual de la ventana
+      setIsDesktopView(window.innerWidth >= 800);
+
       const handleResize = () => {
         setIsDesktopView(window.innerWidth >= 800);
       };
 
       window.addEventListener('resize', handleResize);
+
       return () => window.removeEventListener('resize', handleResize);
     }
-  }, [router.isDesktop]);
+  }, []); // Dependencia vacía para ejecutar el efecto solo una vez
 
   return isDesktopView;
 };
 
-export default useWindowResize
+export default useResizeWindow;
