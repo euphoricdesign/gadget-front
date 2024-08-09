@@ -48,8 +48,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         // Mostrar la notificación
         myToast.showToast() 
       } else {
-        const product = await getProductById(id)
-        setProduct(product)
+        const fetchedProduct = await getProductById(id)
+        setProduct(fetchedProduct)
         const cart = JSON.parse(localStorage.getItem("cart") || "[]")
         if (!cart.includes(product)) {
           cart.push(product)

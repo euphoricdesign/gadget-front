@@ -35,15 +35,26 @@ interface Purchase {
 
 
 const Dashboard = () => {
-  const storedUserSession = localStorage.getItem("userSession");
-  const [userSession, setUserSession] = useState<UserSession | null>(storedUserSession ? JSON.parse(storedUserSession) : null);
+  const [userSession, setUserSession] = useState<any>(null);
 
-  const [userPurchaseData, setUserPurchaseData] = useState<Purchase[]>([])
-  console.log(userPurchaseData);
-  
+  const [userPurchaseData, setUserPurchaseData] = useState<Purchase[]>([])  
 
   const userData = userSession?.userData
   const envVars = getEnvVariables();
+
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const storedUserSession = localStorage.getItem("userSession");
+        if (storedUserSession) {
+          setUserSession(JSON.parse(storedUserSession));
+        }
+      }
+    } catch (error) {
+      console.error('Error al leer del localStorage:', error);
+    }
+  }, []);
+
 
   useEffect(() => {
     const getPurchaseData = async () => {

@@ -9,65 +9,71 @@ import Link from "next/link"
 import {getEnvVariables} from '../../helpers/getEnvVariables'
 
 const Cart = () => {
-  const storedCart = localStorage.getItem("cart") 
-  const [cart, setCart] = useState(storedCart ? JSON.parse(storedCart) : null)
-
-  const storedUserSession = localStorage.getItem("userSession") 
-  const [userSession, setUserSession] = useState(storedUserSession ? JSON.parse(storedUserSession) : null) 
-  
-  const [success, setSuccess] = useState<boolean>(false)
+  const [cart, setCart] = useState<IProduct[] | null>(null);
+  const [userSession, setUserSession] = useState<any>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const envVars = getEnvVariables();
 
-  const handleBuy = async () => {
-    const orderProducts = new Set(cart.map((product: IProduct) =>  product.id))
+  // Efecto para obtener datos de localStorage al montar el componente
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const storedCart = localStorage.getItem("cart");
+        if (storedCart) {
+          setCart(JSON.parse(storedCart));
+        }
+  
+        const storedUserSession = localStorage.getItem("userSession");
+        if (storedUserSession) {
+          setUserSession(JSON.parse(storedUserSession));
+        }
+      }   
+    } catch (error) {
+      console.error('Error al leer del localStorage:', error);
+    }
+  }, []);
 
-    // Configuración de la petición, incluyendo el token en el encabezado y el array de IDs en el cuerpo
+  const handleBuy = async () => {
+    if (!cart || !userSession) {
+      console.error('Faltan datos necesarios para realizar la compra.');
+      return;
+    }
+
+    const orderProducts = new Set(cart.map((product: IProduct) => product.id));
+
     const config = {
       headers: {
-        'Authorization':  userSession.token // Establecer el token en el encabezado de autorización
+        'Authorization': userSession.token // Establecer el token en el encabezado de autorización
       }
-    } 
+    };
 
-    // Objeto que contiene los datos que se enviarán en el cuerpo de la petición
     const data = {
       products: Array.from(orderProducts)
-    } 
+    };
 
-    // Realizar la petición POST utilizando Axios
     try {
-      const response: any = await axios.post(`${envVars.NEXT_PUBLIC_BACK_URL}/orders`, data, config)
-      const respuesta = response.data
-      console.log('Respuesta:', respuesta) 
+      const response = await axios.post(`${envVars.NEXT_PUBLIC_BACK_URL}/orders`, data, config);
+      const respuesta = response.data;
+      console.log('Respuesta:', respuesta);
 
-      setSuccess(true)
+      setSuccess(true);
       setTimeout(() => {
-        localStorage.setItem("cart", "[]")
-        setCart([])
-      }, 1500)
+        localStorage.setItem("cart", "[]");
+        setCart([]);
+      }, 1500);
     } catch (error) {
-      console.error('Error al realizar la petición:', error)
-    } 
-  }
+      console.error('Error al realizar la petición:', error);
+    }
+  };
 
   const handleDelete = (userId: any) => {
-    
-    // Eliminar el elemento del array
-    const nuevoArray = cart.filter((item:any) => item.id !== userId);
+    if (!cart) return;
 
-    // Guardar el nuevo array en el localStorage
+    const nuevoArray = cart.filter((item: any) => item.id !== userId);
     localStorage.setItem("cart", JSON.stringify(nuevoArray));
-
-    setCart(nuevoArray)
-  }
-
-  useEffect(() => {
-    const storedCart = localStorage.getItem("cart")
-    if (storedCart) {
-      setCart(JSON.parse(storedCart))
-    }
-  }, [])
-
+    setCart(nuevoArray);
+  };
 
   return (
     <AuthLayout>

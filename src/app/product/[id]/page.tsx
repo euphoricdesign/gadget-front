@@ -21,9 +21,7 @@ interface ProductDetailParams {
 
 const ProductDetail = ({ params }: ProductDetailParams) => {
 
-  const storedUserSession = localStorage.getItem("userSession");
-  const [userSession, setUserSession] = useState(storedUserSession ? JSON.parse(storedUserSession) : null);
-
+  const [userSession, setUserSession] = useState<any>(null);
   const [product, setProduct] = useState<IProduct>()
 
   const router = useRouter()
@@ -51,6 +49,20 @@ const ProductDetail = ({ params }: ProductDetailParams) => {
       router.push("/cart")
     }
   }
+
+  // Efecto para obtener datos de localStorage al montar el componente
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const storedUserSession = localStorage.getItem("userSession");
+        if (storedUserSession) {
+          setUserSession(JSON.parse(storedUserSession));
+        }
+      }   
+    } catch (error) {
+      console.error('Error al leer del localStorage:', error);
+    }
+  }, []);
 
   useEffect(() => {
     const getData = async () => {

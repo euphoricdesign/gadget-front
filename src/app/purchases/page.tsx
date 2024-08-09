@@ -22,12 +22,24 @@ interface UserSession {
 }
 
 const Purchases = () => {
-  const storedUserSession = localStorage.getItem("userSession");
-  const [userSession, setUserSession] = useState<UserSession | null>(storedUserSession ? JSON.parse(storedUserSession) : null);
-
+  const [userSession, setUserSession] = useState<any>(null);
   const [userPurchaseData, setUserPurchaseData] = useState<Purchase[]>([])
 
   const envVars = getEnvVariables();
+
+  // Efecto para obtener datos de localStorage al montar el componente
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        const storedUserSession = localStorage.getItem("userSession");
+        if (storedUserSession) {
+          setUserSession(JSON.parse(storedUserSession));
+        }
+      }   
+    } catch (error) {
+      console.error('Error al leer del localStorage:', error);
+    }
+  }, []);
 
   useEffect(() => {
     const getPurchaseData = async () => {

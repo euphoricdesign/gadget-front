@@ -32,9 +32,22 @@ const Login: React.FC = () => {
   const [failed, setFailed] = useState<boolean>(false)
 
 
-  const [userSession, setUserSession] = useState(localStorage.getItem("userSession") || null)
+  const [userSession, setUserSession] = useState<any>(null);
 
   const envVars = getEnvVariables();
+
+  // Efecto para obtener datos de localStorage al montar el componente
+  useEffect(() => {
+    // Verifica si estás en el cliente
+    if (typeof window !== 'undefined') {
+      const session = localStorage.getItem("userSession");
+      setUserSession(session);
+
+      if (session) {
+        router.push("/");
+      }
+    }
+  }, [router]);
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,10 +127,6 @@ const Login: React.FC = () => {
       console.log(err)
     }
   }
-
-  useEffect(() => {
-    if (userSession) router.push("/")
-  })
 
   return (
     <div className='my-16'>

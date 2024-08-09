@@ -9,14 +9,16 @@ export default function AuthLayout({ children }) {
   
 
   useEffect(() => {
-    // Obtener la sesión del usuario desde el localStorage
-    const userSession = localStorage.getItem('userSession');
+    if (typeof window !== 'undefined') {
+      // Obtener la sesión del usuario desde el localStorage
+      const userSession = localStorage.getItem('userSession');
 
-    if (!userSession) {
-      // Si el usuario no está autenticado, redirige a la página de inicio de sesión
-      router.push('/login');
-    } else {
-      setIsAuthenticated(true);
+      if (!userSession) {
+        // Si el usuario no está autenticado, redirige a la página de inicio de sesión
+        router.push('/login');
+      } else {
+        setIsAuthenticated(true);
+      }
     }
   }, [router]);
 

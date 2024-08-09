@@ -6,23 +6,7 @@ import { useRouter } from 'next/navigation'
 import styles from "../../components/CardHome/CardHome.module.css"
 import Link from 'next/link'
 import { getEnvVariables } from '@/helpers/getEnvVariables'
-
-
-interface FormData {
-  email: string;
-  password: string;
-  name: string;
-  address: string;
-  phone: string;
-}
-
-interface Errors {
-  email: string;
-  password: string;
-  name: string;
-  address: string;
-  phone: string;
-}
+import { Errors, FormData } from '@/types/types'
 
 const Register = () => {
   const router = useRouter()
@@ -33,7 +17,8 @@ const Register = () => {
     name: "",
     address: "",
     phone: ""
-})
+  })
+
   const [errors, setErrors] = useState<Errors>({
     email: "",
     password: "",
@@ -43,17 +28,29 @@ const Register = () => {
   })
 
   const [success, setSuccess] = useState<boolean>(false)
-  const [userSession, setUserSession] = useState(localStorage.getItem("userSession") || null)
+  const [userSession, setUserSession] = useState<string | null>(null)
 
   const envVars = getEnvVariables();
 
+  useEffect(() => {
+    // Verifica si estás en el cliente
+    if (typeof window !== 'undefined') {
+      const session = localStorage.getItem("userSession");
+      setUserSession(session);
+
+      if (session) {
+        router.push("/");
+      }
+    }
+  }, [router]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target
+    const { name, value } = e.target
 
     setFormData({
       ...formData,
       [name]: value
-    }) 
+    })
 
     validateAndUpdateErrors(name, value)
   }
@@ -67,13 +64,13 @@ const Register = () => {
     })
   }
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     try {
       //* Validar que todos los campos obligatorios estén llenos
       let isFormValid = true
-      const newErrors:Partial<Errors> = {}
+      const newErrors: Partial<Errors> = {}
       for (const field in formData) {
         if (!formData[field as keyof FormData]) {
           newErrors[field as keyof Errors] = `${field} es requerido.`;
@@ -125,12 +122,8 @@ const Register = () => {
     } catch (err) {
       console.log(err)
     }
-    
-  }
 
-  useEffect(() => {
-    if (userSession) router.push("/")
-  })
+  }
 
   return (
     <div className='my-16'>
@@ -156,19 +149,18 @@ const Register = () => {
         <input className={errors.phone ? 'border-2 border-red-600 w-full bg-red-200 p-2.5 rounded text-base mb-2.5' : 'w-full p-2.5 border border-slate-300 rounded text-base mb-2.5'} type="text" value={formData.phone} name='phone' onChange={handleInputChange} />
         {errors.phone && <p className="text-red-600 text-sm mb-4">{errors.phone}</p>}
 
-
         <button className={`${styles.button} flex justify-center items-center gap-4 shadow-md w-full border-slate-800 bg-[#1A1A1A] text-white text-sm font-medium mt-8 hover:-translate-y-1 transition p-3 duration-300 rounded border-2`}>Send</button>
-      
+
         {success && (
-            <div className="mt-4 py-3 px-4 bg-[#e8f5e9] border border-[#c8e6c9] rounded text-sm text-[#2e7d32] flex items-center">
-              <svg className="mr-2 text-[#4caf50]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
-              Your account was successfully created!
-            </div>
-          )}
-      
+          <div className="mt-4 py-3 px-4 bg-[#e8f5e9] border border-[#c8e6c9] rounded text-sm text-[#2e7d32] flex items-center">
+            <svg className="mr-2 text-[#4caf50]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            Your account was successfully created!
+          </div>
+        )}
+
       </form>
       <div className="text-center mt-5 mb-10">
         Already have an account? <Link href="/login" className="text-slate-500 no-underline hover:underline">Login here</Link>
