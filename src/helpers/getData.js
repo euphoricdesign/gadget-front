@@ -1,5 +1,9 @@
+import { getEnvVariables } from "./getEnvVariables"
+
+const envVars = getEnvVariables();
+
 export async function getDataProducts() {
-    const res = await fetch('http://localhost:3001/products')
+    const res = await fetch(`${envVars.NEXT_PUBLIC_BACK_URL}/products`)
    
     if (!res.ok) {
       throw new Error('Failed to fetch data')

@@ -4,6 +4,7 @@ import { validateForm } from '../../helpers/validateForm'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import styles from '../../components/CardHome/CardHome.module.css'
+import { getEnvVariables } from '@/helpers/getEnvVariables'
 
 interface FormData {
   email: string;
@@ -32,6 +33,8 @@ const Login: React.FC = () => {
 
 
   const [userSession, setUserSession] = useState(localStorage.getItem("userSession") || null)
+
+  const envVars = getEnvVariables();
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +86,7 @@ const Login: React.FC = () => {
           body: JSON.stringify(formData) // Convertimos los datos a formato JSON
         }
 
-        const response = await fetch("http://localhost:3001/users/login", opciones)
+        const response = await fetch(`${envVars.NEXT_PUBLIC_BACK_URL}/users/login`, opciones)
 
         if (!response.ok) {
           setFailed(true)

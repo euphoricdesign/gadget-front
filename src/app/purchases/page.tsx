@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios'
 import ProductCard from '@/components/ProductCard/ProductCard';
 import styles from '../../components/CardHome/CardHome.module.css'
 import Link from 'next/link';
+import { getEnvVariables } from '@/helpers/getEnvVariables';
 
 interface Product {
   id: string;
@@ -26,6 +27,8 @@ const Purchases = () => {
 
   const [userPurchaseData, setUserPurchaseData] = useState<Purchase[]>([])
 
+  const envVars = getEnvVariables();
+
   useEffect(() => {
     const getPurchaseData = async (token:string) => {
       const config = {
@@ -33,7 +36,7 @@ const Purchases = () => {
           'Authorization':  token // Establecer el token en el encabezado de autorización
         }
       } 
-      const purchaseData: AxiosResponse<Purchase[]>  = await axios.get("http://localhost:3001/users/orders", config)
+      const purchaseData: AxiosResponse<Purchase[]>  = await axios.get(`${envVars.NEXT_PUBLIC_BACK_URL}/users/orders`, config)
       const data = purchaseData.data
       
       setUserPurchaseData(data)

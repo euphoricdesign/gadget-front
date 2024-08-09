@@ -5,6 +5,7 @@ import { validateForm } from '../../helpers/validateForm'
 import { useRouter } from 'next/navigation'
 import styles from "../../components/CardHome/CardHome.module.css"
 import Link from 'next/link'
+import { getEnvVariables } from '@/helpers/getEnvVariables'
 
 
 interface FormData {
@@ -43,6 +44,8 @@ const Register = () => {
 
   const [success, setSuccess] = useState<boolean>(false)
   const [userSession, setUserSession] = useState(localStorage.getItem("userSession") || null)
+
+  const envVars = getEnvVariables();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
@@ -93,7 +96,7 @@ const Register = () => {
           body: JSON.stringify(formData) // Convertimos los datos a formato JSON
         }
 
-        const response = await fetch("http://localhost:3001/users/register", opciones)
+        const response = await fetch(`${envVars.NEXT_PUBLIC_BACK_URL}/users/register`, opciones)
 
         if (!response.ok) {
           throw new Error('Error en al intentar registrarse'); // Si la respuesta no es exitosa, lanzamos un error

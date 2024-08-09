@@ -5,6 +5,7 @@ import AuthLayout from "../../components/AuthLayout/AuthLayout"
 import axios from 'axios'
 import Image from "next/image"
 import Link from "next/link"
+import { getEnvVariables } from "@/helpers/getEnvVariables"
 
 
 interface UserData {
@@ -42,6 +43,7 @@ const Dashboard = () => {
   
 
   const userData = userSession?.userData
+  const envVars = getEnvVariables();
 
   useEffect(() => {
     const getPurchaseData = async (token:string) => {
@@ -50,7 +52,7 @@ const Dashboard = () => {
           'Authorization':  token // Establecer el token en el encabezado de autorización
         }
       } 
-      const purchaseData = await axios.get("http://localhost:3001/users/orders", config)
+      const purchaseData = await axios.get(`${envVars.NEXT_PUBLIC_BACK_URL}/orders`, config)
       const data = purchaseData.data
       
       setUserPurchaseData(data)

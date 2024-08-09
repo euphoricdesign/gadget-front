@@ -6,9 +6,9 @@ import styles from "../../components/CardHome/CardHome.module.css"
 import AuthLayout from "@/components/AuthLayout/AuthLayout"
 import axios from 'axios'
 import Link from "next/link"
+import {getEnvVariables} from '../../helpers/getEnvVariables'
 
 const Cart = () => {
-
   const storedCart = localStorage.getItem("cart") 
   const [cart, setCart] = useState(storedCart ? JSON.parse(storedCart) : null)
 
@@ -16,6 +16,8 @@ const Cart = () => {
   const [userSession, setUserSession] = useState(storedUserSession ? JSON.parse(storedUserSession) : null) 
   
   const [success, setSuccess] = useState<boolean>(false)
+
+  const envVars = getEnvVariables();
 
   const handleBuy = async () => {
     const orderProducts = new Set(cart.map((product: IProduct) =>  product.id))
@@ -34,7 +36,7 @@ const Cart = () => {
 
     // Realizar la petición POST utilizando Axios
     try {
-      const response: any = await axios.post("http://localhost:3001/orders", data, config)
+      const response: any = await axios.post(`${envVars.NEXT_PUBLIC_BACK_URL}/orders`, data, config)
       const respuesta = response.data
       console.log('Respuesta:', respuesta) 
 
