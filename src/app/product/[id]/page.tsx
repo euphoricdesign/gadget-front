@@ -54,11 +54,16 @@ const ProductDetail = ({ params }: ProductDetailParams) => {
 
   useEffect(() => {
     const getData = async () => {
-      const product = await getProductById(params.id)
-      setProduct(product)
-    }
-    getData()
-  }, [])
+      try {
+        const product = await getProductById(params.id);
+        setProduct(product);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
+    };
+    getData();
+  }, [params.id]);
 
   return (
     <div className='flex flex-row flex-wrap mobile:justify-center desktop:justify-start'>

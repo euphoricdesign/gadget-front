@@ -30,22 +30,27 @@ const Purchases = () => {
   const envVars = getEnvVariables();
 
   useEffect(() => {
-    const getPurchaseData = async (token:string) => {
+    const getPurchaseData = async () => {
+      if (!userSession?.token) return;
+  
       const config = {
         headers: {
-          'Authorization':  token // Establecer el token en el encabezado de autorización
+          'Authorization': userSession.token
         }
-      } 
-      const purchaseData: AxiosResponse<Purchase[]>  = await axios.get(`${envVars.NEXT_PUBLIC_BACK_URL}/users/orders`, config)
-      const data = purchaseData.data
-      
-      setUserPurchaseData(data)
-    }
-
-    if (userSession && userSession.token) {
-      getPurchaseData(userSession.token);
-    }
-  },[])
+      };
+  
+      try {
+        const purchaseData: AxiosResponse = await axios.get(`${envVars.NEXT_PUBLIC_BACK_URL}/users/orders`, config);
+        setUserPurchaseData(purchaseData.data);
+      } catch (error) {
+        console.error("Error fetching purchase data:", error);
+        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+      }
+    };
+  
+    getPurchaseData();
+  }, [userSession, userSession?.token, envVars.NEXT_PUBLIC_BACK_URL]);
+  
   return (
     <div>
         <h2 className='text-2xl font-bold text-[#454545] mb-4 mt-10'>My purchases</h2>
@@ -54,14 +59,14 @@ const Purchases = () => {
                 userPurchaseData.length > 0 ? (
                     <div className='flex gap-8 my-12 flex-wrap desktop:justify-start mobile:justify-center'>
                         {
-                            userPurchaseData.map(purchase => (
-                                <>
+                            userPurchaseData.map((purchase, index) => (
+                                <div key={index}>
                                     {
                                         purchase.products.map(product => (
-                                            <ProductCard id={product.id} image={product.image} name={product.name} price={product.price} />
+                                            <ProductCard key={product.id} id={product.id} image={product.image} name={product.name} price={product.price} />
                                         ))
                                     }
-                                </>
+                                </div>
                             ))
                         }
                     </div>
