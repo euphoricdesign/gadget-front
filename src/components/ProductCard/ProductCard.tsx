@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation" 
 import { CiShoppingCart  } from "react-icons/ci" 
 import Toastify from 'toastify-js'
+import Image from "next/image"
 
 
 interface ProductCardProps {
@@ -70,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
     return (
       <div className="bg-white shadow-md rounded-md overflow-hidden p-3 h-22rem">
-        <Link href={`/product/${id}`}><img src={image} alt={name} className="w-full h-48 object-contain" /></Link>
+        <Link href={`/product/${id}`}><Image src={image} alt={name} className="w-full h-48 object-contain" /></Link>
         
         <div className="p-4 flex flex-col desktop:gap-4 mobile:gap-1">
           <h3 className="desktop:text-lg font-semibold mb-2 mobile:text-sm">{name}</h3>
