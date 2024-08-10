@@ -32,51 +32,45 @@ interface Purchase {
   status: string;
 }
 
-
+const envVars = getEnvVariables();
 
 const Dashboard = () => {
   const [userSession, setUserSession] = useState<any>(null);
 
-  const [userPurchaseData, setUserPurchaseData] = useState<Purchase[]>([])  
-
-  const userData = userSession?.userData
-  const envVars = getEnvVariables();
-
   useEffect(() => {
     try {
-      if (typeof window !== 'undefined') {
-        const storedUserSession = localStorage.getItem("userSession");
-        if (storedUserSession) {
-          setUserSession(JSON.parse(storedUserSession));
-        }
+      const storedUserSession = localStorage.getItem("userSession");
+      if (storedUserSession) {
+        setUserSession(JSON.parse(storedUserSession));
       }
     } catch (error) {
       console.error('Error al leer del localStorage:', error);
     }
   }, []);
 
+  const [userPurchaseData, setUserPurchaseData] = useState<Purchase[]>([])  
+
+  const userData = userSession?.userData
 
   useEffect(() => {
-    const getPurchaseData = async () => {
-      if (!userSession?.token) return;
-  
+    const getPurchaseData = async (token:string) => {
       const config = {
         headers: {
-          'Authorization': userSession.token
+          'Authorization':  token // Establecer el token en el encabezado de autorización
         }
-      };
-  
-      try {
-        const purchaseData = await axios.get(`${envVars.NEXT_PUBLIC_BACK_URL}/orders`, config);
-        setUserPurchaseData(purchaseData.data);
-      } catch (error) {
-        console.error("Error fetching purchase data:", error);
-        // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
-      }
-    };
-  
-    getPurchaseData();
-  }, [userSession, userSession?.token, envVars.NEXT_PUBLIC_BACK_URL]);
+      } 
+
+      console.log(config)
+      const purchaseData = await axios.get(`${envVars.NEXT_PUBLIC_BACK_URL}/users/orders`, config)
+      const data = purchaseData.data
+      
+      setUserPurchaseData(data)
+    }
+    
+    if (userSession?.token) {
+      getPurchaseData(userSession.token);
+    }
+  },[userSession])
   
   return (
     <AuthLayout>
@@ -101,11 +95,11 @@ const Dashboard = () => {
                         <div className="flex flex-col gap-6">
                           <h3 className="text-xl font-semibold text-[#454545]">My purchases</h3>
                           {
-                            userPurchaseData.slice(0, 2).map((purchase, index) => (
-                              <div key={index}>
+                            userPurchaseData.slice(0, 2).map(purchase => (
+                              <>
                                 {
-                                  purchase.products.map((product, index) => (
-                                    <div key={index} className="text-sm flex gap-4">
+                                  purchase.products.map(product => (
+                                    <div className="text-sm flex gap-4">
                                       <Image className="w-20" width={100} height={1} src={product.image} alt={product.name} />
                                       <div>
                                         <h3 className="font-semibold">{product.name}</h3>
@@ -116,7 +110,7 @@ const Dashboard = () => {
                                     </div>
                                   ))
                                 }
-                              </div>
+                              </>
                             ))
                           }
                         </div>
