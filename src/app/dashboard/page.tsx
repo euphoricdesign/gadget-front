@@ -95,11 +95,11 @@ const Dashboard = () => {
                         <div className="flex flex-col gap-6">
                           <h3 className="text-xl font-semibold text-[#454545]">My purchases</h3>
                           {
-                            userPurchaseData.slice(0, 2).map(purchase => (
-                              <>
+                            userPurchaseData.slice(0, 2).map((purchase, index) => (
+                              <div key={index}>
                                 {
-                                  purchase.products.map(product => (
-                                    <div className="text-sm flex gap-4">
+                                  purchase.products.map((product, index) => (
+                                    <div key={index} className="text-sm flex gap-4">
                                       <Image className="w-20" width={100} height={1} src={product.image} alt={product.name} />
                                       <div>
                                         <h3 className="font-semibold">{product.name}</h3>
@@ -110,7 +110,7 @@ const Dashboard = () => {
                                     </div>
                                   ))
                                 }
-                              </>
+                              </div>
                             ))
                           }
                         </div>
