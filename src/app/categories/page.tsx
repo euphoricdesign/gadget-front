@@ -15,8 +15,6 @@ const Categories = () => {
               <Image
                 src="https://http2.mlstatic.com/D_NQ_NP_2X_786356-MLM51559385272_092022-F.webp"
                 className="w-36 h-auto"
-                width={100}
-                height={1}
                 alt=""
               />
               <h3 className="text-lg font-semibold">Smartphones</h3>
@@ -29,8 +27,6 @@ const Categories = () => {
               <Image
                 src="https://ofertones.com.ar/cdn/shop/products/D_NQ_NP_803992-MLA52988770428_122022-F.jpg?v=1705949937&width=767"
                 className="w-36 h-auto"
-                width={100}
-                height={1}
                 alt=""
               />
               <h3 className="text-lg font-semibold">iPads</h3>
@@ -43,8 +39,6 @@ const Categories = () => {
               <Image
                 src="https://http2.mlstatic.com/D_NQ_NP_2X_763092-MLA45715455112_042021-F.webp"
                 className="w-36 h-auto"
-                width={100}
-                height={1}
                 alt=""
               />
               <h3 className="text-lg font-semibold">Airpods</h3>

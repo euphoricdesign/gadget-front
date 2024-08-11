@@ -34,8 +34,6 @@ const CardHome: React.FC<CardHomeProps> = ({ span, heading, pTop }) => {
         </button>
       </div>
       <Image
-        width={0}
-        height={0}
         className={`${pTop === "-30%" ? styles.img1 : styles.img2}`}
         src={pTop === "-30%" ? iphone : headphones}
         alt="iphone"

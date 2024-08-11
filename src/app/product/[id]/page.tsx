@@ -82,8 +82,6 @@ const ProductDetail = ({ params }: ProductDetailParams) => {
             <Image
               className="w-96"
               src={product.image}
-              width={384}
-              height={1}
               layout="responsive"
               alt={`${product.name}`}
             />

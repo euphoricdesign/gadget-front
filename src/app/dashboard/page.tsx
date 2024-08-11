@@ -95,8 +95,6 @@ const Dashboard = () => {
                             <div key={index} className="text-sm flex gap-4">
                               <Image
                                 className="w-20"
-                                width={100}
-                                height={1}
                                 src={product.image}
                                 alt={product.name}
                               />
