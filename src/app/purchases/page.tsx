@@ -61,7 +61,7 @@ const Purchases = () => {
       </h2>
       <div>
         {userPurchaseData.length > 0 ? (
-          <div className="flex gap-8 my-12 flex-wrap desktop:justify-between mobile:justify-center">
+          <div className="flex gap-8 my-12 flex-wrap desktop:justify-start mobile:justify-center">
             {userPurchaseData.flatMap((purchase, purchaseIndex) =>
               purchase.products.map((product) => (
                 <PurchasedProductCard
