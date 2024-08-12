@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
       className={` bg-white border-t border-slate-200 desktop:py-8 desktop:px-32 mobile:py-8 mobile:px-16 text-left`}
     >
       <div className="flex flex-wrap justify-between">
-        <div className="w-full md:w-1/3">
+        <div className="w-full md:w-1/3 mobile:text-center desktop:text-start">
           <h3 className="text-2xl font-bold text-gray-800 mb-4 desktop:text-start mobile:text-center">
             gadget
           </h3>
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
             Gadget Company © 2024
           </p>
         </div>
-        <div className="w-full md:w-1/3 mt-8 md:mt-0">
+        <div className="w-full md:w-1/3 mt-8 md:mt-0 mobile:text-center desktop:text-start">
           <div className="flex items-center mb-4">
             <CiLocationOn className="text-zinc-600 mr-2 text-2xl" />
             <p className="text-gray-600">
@@ -44,11 +44,11 @@ const Footer: React.FC = () => {
               Beach, California
             </p>
           </div>
-          <div className="flex items-center mb-4">
+          <div className="flex items-center mb-4 mobile:justify-center desktop:justify-start">
             <CiPhone className="text-zinc-600 mr-2 text-2xl" />
             <p className="text-gray-600">+1.555.555.5555</p>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center mobile:justify-center desktop:justify-start">
             <CiMail className="fas fa-envelope text-zinc-600 mr-2 text-2xl" />
             <p className="text-gray-600">
               <a

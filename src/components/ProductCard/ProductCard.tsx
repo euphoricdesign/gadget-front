@@ -67,13 +67,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }, []);
 
   return (
-    <div className="bg-white shadow-md rounded-md overflow-hidden p-3 h-22rem">
-      <Link href={`/product/${id}`}>
-        <img src={image} alt={name} className="w-full h-48 object-contain" />
+    <div className="bg-white shadow-md rounded-md overflow-hidden desktop:p-3 mobile:p-[0px] mobile:pt-[16px] desktop:h-22rem">
+      <Link
+        href={`/product/${id}`}
+        className="mobile:flex justify-center desktop:block"
+      >
+        <img
+          src={image}
+          alt={name}
+          className="desktop:w-full mobile:w-[130px] desktop:h-48 object-contain"
+        />
       </Link>
 
       <div className="p-4 flex flex-col desktop:gap-4 mobile:gap-1">
-        <h3 className="desktop:text-lg font-semibold mb-2 mobile:text-sm">
+        <h3 className="desktop:text-lg font-semibold mb-2 mobile:text-[15px]">
           {name}
         </h3>
         <div className="flex justify-between items-center">
