@@ -143,16 +143,16 @@ const Navbar: React.FC = () => {
                   <ul className="flex flex-col gap-3">
                     <li onClick={handleCloseModal}>
                       <Link href={userSession ? "/dashboard" : "/login"}>
-                        {userSession ? "Mi cuenta" : "Inicia sesión"}
+                        {userSession ? "My account" : "Sign in"}
                       </Link>
                     </li>
                     <li onClick={handleCloseModal}>
-                      <Link href="">Guardados</Link>
+                      <Link href="">Saved</Link>
                     </li>
                     {userSession && (
                       <li onClick={handleCloseModal}>
                         <Link onClick={removeUserFromLocalStorage} href="#">
-                          Cerrar sesión
+                          Log out
                         </Link>
                       </li>
                     )}
@@ -238,16 +238,16 @@ const Navbar: React.FC = () => {
                   <ul className="flex flex-col gap-3">
                     <li onClick={handleCloseModal}>
                       <Link href={userSession ? "/dashboard" : "/login"}>
-                        {userSession ? "Mi cuenta" : "Inicia sesión"}
+                        {userSession ? "My account" : "Sign in"}
                       </Link>
                     </li>
                     <li onClick={handleCloseModal}>
-                      <Link href="">Guardados</Link>
+                      <Link href="">Saved</Link>
                     </li>
                     {userSession && (
                       <li onClick={handleCloseModal}>
                         <Link onClick={removeUserFromLocalStorage} href="#">
-                          Cerrar sesión
+                          Log out
                         </Link>
                       </li>
                     )}
