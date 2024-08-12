@@ -94,11 +94,7 @@ const Cart = () => {
                   <div key={product.id}>
                     <div className="flex flex-col gap-6 flex-1 mt-4">
                       <div className="flex items-center gap-5">
-                        <Image
-                          className="w-36"
-                          src={product.image}
-                          alt=""
-                        />
+                        <Image className="w-36" src={product.image} alt="" />
                         <div className="flex flex-col items-start text-[#454545]">
                           <h3 className="text-xl font-semibold mb-3 flex justify-between w-full">
                             {product.name}{" "}

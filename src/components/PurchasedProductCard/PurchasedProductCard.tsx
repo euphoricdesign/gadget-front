@@ -31,15 +31,11 @@ const PurchasedProductCard: React.FC<PurchasedProductCardProps> = ({
         <div className="flex justify-between flex-col gap-[6px]">
           <div className="flex items-center gap-1">
             <p className="text-gray-400 text-sm">Price:</p>
-            <p className="text-[12px]">
-              ${price}
-            </p>
+            <p className="text-[12px]">${price}</p>
           </div>
           <div className="flex items-center gap-1">
             <p className="text-gray-400 text-sm">Status:</p>
-            <p className="text-[12px] text-green-500">
-              {status}
-            </p>
+            <p className="text-[12px] text-green-500">{status}</p>
           </div>
           <div className="flex items-center gap-1">
             <p className="text-gray-400 text-sm">Date:</p>

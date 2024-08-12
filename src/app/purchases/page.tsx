@@ -8,10 +8,6 @@ import { getEnvVariables } from "@/helpers/getEnvVariables";
 import PurchasedProductCard from "@/components/PurchasedProductCard/PurchasedProductCard";
 import { Purchased } from "@/types/types";
 
-
-
-
-
 const Purchases = () => {
   const [userSession, setUserSession] = useState<any>(null);
   const [userPurchaseData, setUserPurchaseData] = useState<Purchased[]>([]);
