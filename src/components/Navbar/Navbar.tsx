@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
 
             {showModal && (
               <div
-                className="absolute desktop:top-120 mobile:top-[2.8rem] mobile:left-[13rem] w-[10rem] bg-white flex gap-4 justify-center left-48 p-5 h-32 rounded shadow-md"
+                className="absolute desktop:top-120 mobile:top-[2.8rem] mobile:left-[13rem] phablet:left-[15rem] w-[10rem] bg-white flex gap-4 justify-center left-48 p-5 h-32 rounded shadow-md"
                 ref={modalRef}
               >
                 <div>

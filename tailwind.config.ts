@@ -25,7 +25,7 @@ const config: Config = {
         'desktop': '1200px', // Dispositivos con un ancho de 1200px o superior
         // Breakpoints para dispositivos móviles modernos
         'mobile': '360px', // Dispositivos móviles pequeños
-        'phablet': '480px', // Dispositivos móviles medianos  
+        'phablet': '430px', // Dispositivos móviles medianos  
         'phone': '580px', // Dispositivos móviles grandes
       },
       height: {

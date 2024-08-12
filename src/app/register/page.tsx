@@ -134,7 +134,7 @@ const Register = () => {
       <h1 className="text-center text-3xl font-bold mb-8">Register</h1>
       <form
         onSubmit={handleSubmit}
-        className="w-2/5 ml-auto mr-auto p-5 bg-[#f5f5f5] rounded shadow-md"
+        className="desktop:w-2/5 ml-auto mr-auto p-5 bg-[#f5f5f5] rounded shadow-md"
       >
         <label className="block my-2.5 font-bold">Full Name</label>
         <input
