@@ -27,7 +27,7 @@ const ProductDetail = ({ params }: ProductDetailParams) => {
     if (!userSession) {
       // Crear una instancia de notificación
       const myToast = Toastify({
-        text: "Inicia sesión para agregar productos",
+        text: "Sign in to add products",
         className: "toastify",
         position: "left",
         gravity: "bottom",
