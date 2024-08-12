@@ -35,7 +35,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     if (!userSession) {
       // Crear una instancia de notificación
       const myToast = Toastify({
-        text: "Please login to add products to cart",
+        text: "Login to add products to cart",
         className: "toastify",
         position: "left",
         gravity: "bottom",
