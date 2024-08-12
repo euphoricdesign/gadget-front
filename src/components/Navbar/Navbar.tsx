@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
     if (!userSession) {
       // Crear una instancia de notificación
       const myToast = Toastify({
-        text: "Inicia sesión para ver cesta de compras",
+        text: "Please login to see the products in your cart",
         className: "toastify",
         position: "left",
         gravity: "bottom",
